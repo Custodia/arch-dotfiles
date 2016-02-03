@@ -1,0 +1,13 @@
+{
+	"theme": "Spacegray Eighties.sublime-theme",
+    "color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme",
+    "spacegray_sidebar_font_normal": true,
+
+
+
+	"font_face": "tewi",
+	"ignored_packages":
+	[
+		"Vintage"
+	]
+}
