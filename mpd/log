@@ -1,0 +1,82 @@
+Feb 04 20:07 : update: added Spor/Caligo/01 Your Murmuring Chasms.mp3
+Feb 04 20:07 : update: added Spor/Caligo/02 Arms House.mp3
+Feb 04 20:07 : update: added Spor/Caligo/03 Always Right Never Left.mp3
+Feb 04 20:07 : update: added Spor/Caligo/04 Empire ft. James Hadouken!.mp3
+Feb 04 20:07 : update: added Spor/Caligo/05 Like Clockwork.mp3
+Feb 04 20:07 : update: added Spor/Caligo/06 Blueroom.mp3
+Feb 04 20:07 : update: added Spor/Caligo/07 Strange Heart.mp3
+Feb 04 20:07 : update: added Spor/Caligo/09 Full Colour.mp3
+Feb 04 20:07 : update: added Spor/Caligo/10 If You Cry.mp3
+Feb 04 20:07 : update: added Spor/Caligo/10,000.mp3
+Feb 04 20:07 : update: added Spor/Caligo/11 Our Space.mp3
+Feb 04 20:07 : update: added Spor/Caligo/12 Coconut.mp3
+Feb 04 20:07 : update: added Spor/Caligo/13 The Hole Where Your House Was.mp3
+Feb 04 20:07 : update: added Spor/Caligo/Methods.mp3
+Feb 04 20:07 : update: added Spor/Caligo/Nachtwerk.mp3
+Feb 04 20:07 : update: added Spor/Caligo/Red Panda (2 AM Minimal Mix).mp3
+Feb 04 20:07 : update: added Spor/Caligo/Republic.mp3
+Feb 04 20:07 : update: added Spor/Caligo/Spor - Empire.mp4
+Feb 04 20:07 : update: added Spor/Caligo/Unreleased Material (Caligo Sketchbook Mix).mp3
+Feb 04 20:07 : update: added Spor/Caligo/08 As I Need You ft. Tasha Baxter.mp3
+Feb 04 20:07 : client: [0] opened from [::1]:58940
+Feb 04 20:07 : alsa_mixer: Failed to read mixer for 'default detected output': no such mixer control: PCM
+Feb 04 20:07 : client: [0] closed
+Feb 04 20:07 : client: [1] opened from [::1]:58968
+Feb 04 20:08 : client: [1] closed
+Feb 04 20:12 : client: [2] opened from [::1]:59038
+Feb 04 20:12 : client: [2] closed
+Feb 04 20:16 : client: [0] opened from [::1]:53906
+Feb 04 20:17 : client: [0] closed
+Feb 04 20:18 : client: [1] opened from [::1]:54046
+Feb 04 20:18 : client: [1] closed
+Feb 04 20:18 : client: [2] opened from [::1]:54048
+Feb 04 20:18 : client: [2] closed
+Feb 04 20:18 : client: [3] opened from [::1]:54050
+Feb 04 20:18 : client: [3] closed
+Feb 04 20:21 : client: [4] opened from [::1]:54096
+Feb 04 20:21 : client: [4] closed
+Feb 04 20:27 : client: [5] opened from [::1]:54236
+Feb 04 20:27 : client: [5] closed
+Feb 04 20:28 : client: [6] opened from [::1]:54272
+Feb 04 20:28 : errno: Failed to open '': Permission denied
+Feb 04 20:28 : errno: Failed to open '': Permission denied
+Feb 04 20:28 : errno: Failed to open '': Permission denied
+Feb 04 20:28 : errno: Failed to open '': Permission denied
+Feb 04 20:28 : client: [6] closed
+Feb 04 20:28 : client: [7] opened from [::1]:54278
+Feb 04 20:28 : errno: Failed to open '': Permission denied
+Feb 04 20:28 : client: [7] closed
+Feb 04 20:36 : client: [0] opened from [::1]:55410
+Feb 04 20:36 : client: [0] closed
+Feb 04 20:39 : client: [1] opened from [::1]:55682
+Feb 04 20:39 : client: [1] closed
+Feb 04 20:39 : client: [2] opened from [::1]:55694
+Feb 04 20:42 : player: played "Spor/Caligo/01 Your Murmuring Chasms.mp3"
+Feb 04 20:43 : player: played "Spor/Caligo/02 Arms House.mp3"
+Feb 04 20:48 : player: played "Spor/Caligo/Unreleased Material (Caligo Sketchbook Mix).mp3"
+Feb 04 20:51 : client: [2] closed
+Feb 04 20:56 : client: [3] opened from [::1]:56084
+Feb 04 20:56 : client: [3] closed
+Feb 04 20:57 : client: [4] opened from [::1]:56158
+Feb 04 20:57 : player: played "Spor/Caligo/13 The Hole Where Your House Was.mp3"
+Feb 04 20:57 : player: played "Spor/Caligo/01 Your Murmuring Chasms.mp3"
+Feb 04 20:57 : player: played "Spor/Caligo/02 Arms House.mp3"
+Feb 04 21:00 : player: played "Spor/Caligo/01 Your Murmuring Chasms.mp3"
+Feb 04 21:03 : player: played "Spor/Caligo/02 Arms House.mp3"
+Feb 04 21:06 : client: [4] closed
+Feb 04 21:06 : client: [5] opened from [::1]:56494
+Feb 04 21:06 : client: [5] closed
+Feb 04 21:07 : player: played "Spor/Caligo/03 Always Right Never Left.mp3"
+Feb 04 21:07 : player: played "Spor/Caligo/04 Empire ft. James Hadouken!.mp3"
+Feb 04 21:07 : client: [0] opened from [::1]:56518
+Feb 04 21:13 : player: played "Spor/Caligo/04 Empire ft. James Hadouken!.mp3"
+Feb 04 21:21 : player: played "Spor/Caligo/05 Like Clockwork.mp3"
+Feb 04 21:26 : player: played "Spor/Caligo/06 Blueroom.mp3"
+Feb 04 21:31 : player: played "Spor/Caligo/07 Strange Heart.mp3"
+Feb 04 21:36 : player: played "Spor/Caligo/08 As I Need You ft. Tasha Baxter.mp3"
+Feb 04 21:41 : player: played "Spor/Caligo/09 Full Colour.mp3"
+Feb 04 21:46 : player: played "Spor/Caligo/10 If You Cry.mp3"
+Feb 04 21:48 : player: played "Spor/Caligo/11 Our Space.mp3"
+Feb 04 21:53 : player: played "Spor/Caligo/12 Coconut.mp3"
+Feb 04 21:59 : player: played "Spor/Caligo/13 The Hole Where Your House Was.mp3"
+Feb 05 08:20 : player: played "Spor/Caligo/13 The Hole Where Your House Was.mp3"
