@@ -6,6 +6,18 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
 
-export VISUAL="subl3"
+export VISUAL="atom"
+
+## Set bash prompt
+# Dir shortening function
+dir_chomp () {
+  pwd 2> /dev/null | sed -e "s|^$HOME|~|" -e 's:\(\.\?[^/]\)[^/]*/:\1/:g'
+}
+
+# Git branch parsing function
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export PS1="\[\033[32m\]\$(dir_chomp)\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
