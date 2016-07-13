@@ -2,87 +2,142 @@
 # bspwm hotkeys
 #
 
+# Quit bspwm normally
 super + alt + Escape
 	bspc quit
 
-super + w
-	bspc window -c
+# Close and kill node
+super + {_,shift + }w
+	bspc node -{c,k}
 
-super + t
+# Alternate between the tiled and monocle layout
+# Fullscreen?
+super + f
 	bspc desktop -l next
 
-super + b
-	bspc desktop -B
+# Swap the current node and the biggest node
+super + g
+	bspc node -s biggest
 
-super + {s,f}
-	bspc window -t {floating,fullscreen}
 
-super + {grave,Tab}
-	bspc {window,desktop} -f last
 
+#
+# state/flags
+#
+
+# I DON'T LIKE/UNDERSTAND THIS
+## set the window state
+#super + {t,shift + t,s,f}
+#	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# Locked means no close, otherwise no clue
+# set the node flags
+super + ctrl + {x,y,z}
+	bspc node -g {locked,sticky,private}
+
+# Switch focus between last selected node/window
+super + {shift + Tab,Tab}
+	bspc {node,desktop} -f last
+
+# Switch node with the last selected node
 super + apostrophe
-	bspc window -s last
+	bspc node -s last
 
-super + {o,i}
-	bspc control --record-history off; \
-	bspc window {older,newer} -f; \
-	bspc control --record-history on
 
-super + y
-	bspc window -w last.manual
 
-super + m
-	bspc window -s biggest
+#
+# focus/swap
+#
 
+# Focus/swap with the node in the given direction
 super + {_,shift + }{h,j,k,l}
-	bspc window -{f,s} {left,down,up,right}
+	bspc node -{f,s} {west,south,north,east}
 
-super + {_,shift + }c
-	bspc window -f {next,prev}
+# Focus parent/sibling or first and second if both siblings selected
+#,comma,period}#,first,second}
+super + {p,b}
+	bspc node -f @{parent,brother}
+
+## Not without us keyboard
+#super + bracket{left,right}
+#	bspc desktop -f {prev,next}
 
 super + {comma,period}
-	bspc desktop -C {backward,forward}
-
-super + bracket{left,right}
 	bspc desktop -f {prev,next}
 
-super + ctrl + {h,j,k,l}
-	bspc window -p {left,down,up,right}
 
-super + ctrl + {_,shift + }space
-	bspc {window -p cancel,desktop -c}
+# focus the older or newer node in the focus history
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
 
-super + alt + {h,j,k,l}
-	bspc window -e {left -10,down +10,up -10,right +10}
+# Smart swap selected to last manual / last selected to currently selected manual
+super + y
+	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
-super + alt + shift + {h,j,k,l}
-	bspc window -e {right -10,up +10,down -10,left +10}
-
-super + ctrl + {1-9}
-	bspc window -r 0.{1-9}
-
+# Focus ore send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,window -d} ^{1-9,10}
+	bspc {desktop -f,node -d} ^{1-9,10}
 
-~button1
+# Focus clicked window (left, middle, right clicks)
+~button{1-3}
 	bspc pointer -g focus
 
+
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+
+
+
+#
+# move/resize
+#
+
+# DON'T WORK?
+
+# Expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contract a window by moving one of its side inward
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Move/resize on super + mouse buttons
 super + button{1-3}
 	bspc pointer -g {move,resize_side,resize_corner}
 
-super + !button{1-3}
-	bspc pointer -t %i %i
 
-super + @button{1-3}
-	bspc pointer -u
 
 #
 # wm independent hotkeys
 #
 
+# Terminal emulator
 ctrl + alt + t
 	urxvt
 
+# Program launcher
 super + space
 	dmenu_run
 
