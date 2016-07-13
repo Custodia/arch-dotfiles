@@ -36,8 +36,12 @@ super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
 
 # Switch focus between last selected node/window
-super + {shift + Tab,Tab}
+super + {section,Tab}
 	bspc {node,desktop} -f last
+
+# US version for switching between last node
+super + grave
+	bspc node -f last
 
 # Switch node with the last selected node
 super + apostrophe
@@ -54,16 +58,18 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # Focus parent/sibling or first and second if both siblings selected
-#,comma,period}#,first,second}
-super + {p,b}
-	bspc node -f @{parent,brother}
+super + {p,b,comma,period}
+	bspc node -f @{parent,brother,first,second}
 
-## Not without us keyboard
-#super + bracket{left,right}
-#	bspc desktop -f {prev,next}
-
-super + {comma,period}
+#### Flip through desktops
+# With scandinavian keyboard
+super + {aring,dead_diaeresis}
 	bspc desktop -f {prev,next}
+
+# With us keyboard
+super + bracket{left,right}
+	bspc desktop -f {prev,next}
+
 
 
 # focus the older or newer node in the focus history
