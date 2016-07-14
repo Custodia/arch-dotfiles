@@ -31,11 +31,14 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 
-'.platform-win32':
-  'ctrl-t': 'application:new-file'
+'.platform-linux atom-text-editor':
+  'ctrl-shift-L': 'unset!'
 
 'atom-workspace atom-text-editor':
   'ctrl-l': 'unset!'
+
+'atom-text-editor:not([mini])':
+  'ctrl-shift-k': 'unset!'
 
 'atom-text-editor':
   'ctrl-alt-h': 'unset!'

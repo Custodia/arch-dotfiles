@@ -1,0 +1,8 @@
+### Atom is symlinked ###
+## Ignore atom files that are not configuration
+.atom/*
+!.atom/config.cson
+!.atom/init.coffee
+!.atom/keymap.cson
+!.atom/snippets.cson
+!.atom/styles.less

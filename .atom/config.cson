@@ -1,25 +1,32 @@
 "*":
-  "autocomplete-elixir": {}
+  "autocomplete-elixir":
+    elixirPath: "/usr/bin"
+    erlangHome: "/usr/bin"
   core:
     packagesWithKeymapsDisabled: [
-      "monokai-slate"
-      "grammar-selector"
-      "move-panes"
-    ]
-    themes: [
-      "atom-dark-ui"
-      "monokai-slate"
+      "scala-worksheet-plus"
     ]
   editor:
-    scrollPastEnd: true
     showIndentGuide: true
-    tabType: "soft"
-  "exception-reporting":
-    userId: "ca91c878-2b4a-0cf3-0e53-dd3aeedc0764"
-  "ionide-fsharp": {}
-  "tree-ignore": {}
+    showInvisibles: true
+  "git-diff": {}
+  "haskell-ghc-mod":
+    additionalPathDirectories: [
+      "/home/jani/.cabal/bin/"
+    ]
+  "language-elm":
+    elmOraclePath: "/usr/bin/elm-oracle"
+  "split-diff":
+    diffWords: true
+    ignoreWhitespace: true
+    leftEditorColor: "red"
+    rightEditorColor: "green"
+    syncHorizontalScroll: true
   welcome:
     showOnStartup: false
-".powershell.source":
+".elm.source":
   editor:
-    tabLength: 4
+    autoIndentOnPaste: true
+    scrollPastEnd: true
+    showIndentGuide: false
+    showInvisibles: false
