@@ -1,0 +1,25 @@
+"*":
+  "autocomplete-elixir": {}
+  core:
+    packagesWithKeymapsDisabled: [
+      "monokai-slate"
+      "grammar-selector"
+      "move-panes"
+    ]
+    themes: [
+      "atom-dark-ui"
+      "monokai-slate"
+    ]
+  editor:
+    scrollPastEnd: true
+    showIndentGuide: true
+    tabType: "soft"
+  "exception-reporting":
+    userId: "ca91c878-2b4a-0cf3-0e53-dd3aeedc0764"
+  "ionide-fsharp": {}
+  "tree-ignore": {}
+  welcome:
+    showOnStartup: false
+".powershell.source":
+  editor:
+    tabLength: 4
