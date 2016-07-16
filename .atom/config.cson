@@ -5,6 +5,11 @@
   core:
     packagesWithKeymapsDisabled: [
       "scala-worksheet-plus"
+      "move-panes"
+    ]
+    themes: [
+      "atom-dark-ui"
+      "monokai-shade"
     ]
   editor:
     showIndentGuide: true
@@ -22,6 +27,7 @@
     leftEditorColor: "red"
     rightEditorColor: "green"
     syncHorizontalScroll: true
+  "tree-ignore": {}
   welcome:
     showOnStartup: false
 ".elm.source":

@@ -31,6 +31,9 @@
 # Atom Flight Manual:
 # https://atom.io/docs/latest/using-atom-basic-customization#cson
 
+'.platform-linux':
+  'ctrl-t': 'application:new-file'
+
 '.platform-linux atom-text-editor':
   'ctrl-shift-L': 'unset!'
 
