@@ -1,19 +1,15 @@
 #+TITLE: custodia-evil-line-numbers layer
 #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="../css/readtheorg.css" />
 
-#+CAPTION: logo
-
-# The maximum height of the logo should be 200 pixels.
-[[img/custodia-evil-line-numbers.png]]
-
 * Table of Contents                                        :TOC_4_org:noexport:
  - [[Description][Description]]
  - [[Install][Install]]
  - [[Key bindings][Key bindings]]
 
 * Description
-This layer does wonderful things:
-  - thing01
+This layer does custom line numbering. It's meant to be used with evil mode. When in normal mode hybrid line numbering is used, when in insert mode normal line numbering is used.
+
+This way you can move quickly and yank a certain number of lines without having to count them but can still see for example what row that failing test is pointing to.
 
 * Install
 To use this contribution add it to your =~/.spacemacs=
@@ -24,6 +20,6 @@ To use this contribution add it to your =~/.spacemacs=
 
 * Key bindings
 
-| Key Binding     | Description    |
-|-----------------+----------------|
-| ~<SPC> x x x~   | Does thing01   |
+None.
+
+linum-relative-toggle that the layer uses is under =SPC t r= by default in spacemacs. You can also always do =M-x linum-relative-toggle=
