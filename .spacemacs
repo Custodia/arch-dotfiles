@@ -39,6 +39,10 @@ values."
      editorconfig
      themes-megapack
      perspectives
+
+     ;; Private layers
+     custodia-evil-line-numbers
+
      ;; git
      ;; markdown
      ;; org
