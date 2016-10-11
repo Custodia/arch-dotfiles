@@ -7,8 +7,6 @@
 
 alias ls='ls --color=auto'
 
-export VISUAL="atom"
-
 ## Set bash prompt
 # Dir shortening function
 dir_chomp () {
