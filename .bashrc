@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export PATH=$PATH:/home/jani/.config/panel
+
 alias ls='ls --color=auto'
 
 ## Set bash prompt
