@@ -62,16 +62,29 @@ function battery {
     while true; do
         STATUS=`cat $BAT/status`
         CAPACITY=`cat $BAT/capacity`
+        AC_ONLINE=`cat /sys/class/power_supply/AC/online`
 
         if [ $STATUS == "Charging" ]; then
-            STATUS="+"
-        elif [ $STATUS == "Discharging" ]; then
-            STATUS="-"
+            STATUS="\uf0e7"
+        elif [ $AC_ONLINE == "1" ]; then
+            STATUS="\uf1e6"
         else
             STATUS=""
         fi
 
-        echo "B$STATUS$CAPACITY"
+	if [ $CAPACITY -gt "90" ]; then
+            CAPACITY="\uf240"
+	elif [ $CAPACITY -gt "75" ]; then
+            CAPACITY="\uf241"
+	elif [ $CAPACITY -gt "50" ]; then
+            CAPACITY="\uf242"
+	elif [ $CAPACITY -gt "25" ]; then
+            CAPACITY="\uf243"
+	else
+            CAPACITY="\uf244"
+	fi
+
+        echo -e "B$STATUS $CAPACITY"
         sleep 1
     done
 }
@@ -92,13 +105,13 @@ function panel_bar {
                 ;;
         esac
 
-        fmt="%{r}${percent} ${date}"
+        fmt="%{r}${percent}  ${date}"
 
         printf "%s\n" "$fmt"
     done
 }
 
 # Invoke and pipe to the panel
-panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -f "Droid Sans-10" -f "FontAwesome-10" &
 
 wait
