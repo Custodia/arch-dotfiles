@@ -22,9 +22,20 @@ parse_git_branch() {
 
 export PS1="\[\033[32m\]\$(dir_chomp)\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-# Functions only useful on the laptop
-if [[ $(hostname -s) = serendipity ]]; then
+hostname=`hostname -s`
+
+if [ $hostname = serendipity ]; then
     battery () {
         acpi -b
+    }
+fi
+
+if [ $hostname != destiny ]; then
+    mnt_media () {
+        sshfs destiny:/media/HDD/media ~/media
+    }
+
+    umnt_media () {
+        fusermount -u ~/media
     }
 fi
