@@ -54,7 +54,7 @@ bspc config top_padding $PANEL_HEIGHT
 
 function clock {
     while true; do
-        date +"S%d/%m %H:%M"
+        TZ=Europe/Helsinki date +"S%d/%m %H:%M"
         sleep 1
     done
 }
