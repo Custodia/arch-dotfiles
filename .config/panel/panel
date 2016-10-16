@@ -1,10 +1,12 @@
 #! /bin/sh
 
-# Panel settings
+#############
+# Variables #
+#############
+
 PANEL_FIFO="$HOME/.config/panel/fifo"
 PANEL_HEIGHT="16"
 
-# Panel colors, from bspwm examples
 COLOR_FOREGROUND='#FFA3A6AB'
 COLOR_BACKGROUND='#FF34322E'
 COLOR_ACTIVE_MONITOR_FG='#FF34322E'
@@ -30,6 +32,10 @@ COLOR_TITLE_BG='#FF34322E'
 COLOR_STATUS_FG='#FFA3A6AB'
 COLOR_STATUS_BG='#FF34322E'
 
+##########################
+# Preparations for panel #
+##########################
+
 # Kill any open panel processes.
 while [ $(pgrep -cx panel) -gt 1 ] ; do
 	pkill -ox -9 panel
@@ -37,24 +43,21 @@ done
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
-# Set the fifo file
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-# Make room for the panel
 bspc config top_padding $PANEL_HEIGHT
-# Continuosly print bspc events to fifo file
-bspc control --subscribe > "$PANEL_FIFO" &
 
-# Continuously print formatted date
+####################
+# Helper functions #
+####################
+
 function clock {
     while true; do
         date +"S%d/%m %H:%M"
         sleep 1
     done
 }
-
-clock > "$PANEL_FIFO" &
 
 BAT="/sys/class/power_supply/BAT1"
 
@@ -89,11 +92,21 @@ function battery {
     done
 }
 
+################
+# Pipe to fifo #
+################
+
+clock > "$PANEL_FIFO" &
+bspc control --subscribe > "$PANEL_FIFO" &
+
 if [[ $(hostname) == 'serendipity' ]]; then
     battery > "$PANEL_FIFO" &
 fi
 
-# Function that reads the fifo file and outputs values to stdout (for lemonbar)
+#################
+# Lemonbar pipe #
+#################
+
 function panel_bar {
     while read line < $PANEL_FIFO; do
         case $line in
@@ -111,7 +124,6 @@ function panel_bar {
     done
 }
 
-# Invoke and pipe to the panel
 panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -f "Droid Sans-10" -f "FontAwesome-10" &
 
 wait
