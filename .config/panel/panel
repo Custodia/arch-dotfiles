@@ -68,9 +68,9 @@ function battery {
         AC_ONLINE=`cat /sys/class/power_supply/AC/online`
 
         if [ $STATUS == "Charging" ]; then
-            STATUS="\uf0e7"
+            STATUS="\uf0e7 "
         elif [ $AC_ONLINE == "1" ]; then
-            STATUS="\uf1e6"
+            STATUS="\uf1e6 "
         else
             STATUS=""
         fi
@@ -87,7 +87,36 @@ function battery {
             CAPACITY="\uf244"
         fi
 
-        echo -e "B$STATUS $CAPACITY"
+        echo -e "B$STATUS$CAPACITY"
+        sleep 1
+    done
+}
+
+function connman_networkstatus () {
+    while true; do
+        ethernet=`connmanctl technologies | grep -A 5 technology/ethernet | grep Connected | awk '{print $3}'`
+        wifi=`connmanctl technologies | grep -A 5 technology/wifi | grep Connected | awk '{print $3}'`
+        bluetooth=`connmanctl technologies | grep -A 5 technology/bluetooth | grep Connected | awk '{print $3}'`
+
+        if [ $ethernet == "True" ]; then
+            ethernet="\uf26b"
+        else
+            ethernet=""
+        fi
+
+        if [ $wifi == "True" ]; then
+            wifi="\uf1eb"
+        else
+            wifi=""
+        fi
+
+        if [ $bluetooth == "True" ]; then
+            bluetooth="\uf293"
+        else
+            bluetooth=""
+        fi
+
+        echo -e "C$ethernet$wifi$bluetooth"
         sleep 1
     done
 }
@@ -101,6 +130,7 @@ bspc control --subscribe > "$PANEL_FIFO" &
 
 if [[ $(hostname) == 'serendipity' ]]; then
     battery > "$PANEL_FIFO" &
+    connman_networkstatus > "$PANEL_FIFO" &
 fi
 
 #################
@@ -116,9 +146,12 @@ function panel_bar {
             B*)
                 percent="${line#?}"
                 ;;
+            C*)
+                connection="${line#?}"
+                ;;
         esac
 
-        fmt="%{r}${percent}  ${date}"
+        fmt="%{r}${connection}  ${percent}  ${date}"
 
         printf "%s\n" "$fmt"
     done
