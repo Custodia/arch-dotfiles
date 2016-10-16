@@ -75,17 +75,17 @@ function battery {
             STATUS=""
         fi
 
-	if [ $CAPACITY -gt "90" ]; then
+        if [ $CAPACITY -gt "90" ]; then
             CAPACITY="\uf240"
-	elif [ $CAPACITY -gt "75" ]; then
+        elif [ $CAPACITY -gt "75" ]; then
             CAPACITY="\uf241"
-	elif [ $CAPACITY -gt "50" ]; then
+        elif [ $CAPACITY -gt "50" ]; then
             CAPACITY="\uf242"
-	elif [ $CAPACITY -gt "25" ]; then
+        elif [ $CAPACITY -gt "25" ]; then
             CAPACITY="\uf243"
-	else
+        else
             CAPACITY="\uf244"
-	fi
+        fi
 
         echo -e "B$STATUS $CAPACITY"
         sleep 1
