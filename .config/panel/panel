@@ -56,15 +56,43 @@ function clock {
 
 clock > "$PANEL_FIFO" &
 
+BAT="/sys/class/power_supply/BAT1"
+
+function battery {
+    while true; do
+        STATUS=`cat $BAT/status`
+        CAPACITY=`cat $BAT/capacity`
+
+        if [ $STATUS == "Charging" ]; then
+            STATUS="+"
+        elif [ $STATUS == "Discharging" ]; then
+            STATUS="-"
+        else
+            STATUS=""
+        fi
+
+        echo "B$STATUS$CAPACITY"
+        sleep 1
+    done
+}
+
+if [[ $(hostname) == 'serendipity' ]]; then
+    battery > "$PANEL_FIFO" &
+fi
+
 # Function that reads the fifo file and outputs values to stdout (for lemonbar)
 function panel_bar {
     while read line < $PANEL_FIFO; do
         case $line in
             S*)
-            date="${line#?}"
+                date="${line#?}"
+                ;;
+            B*)
+                percent="${line#?}"
+                ;;
         esac
 
-        fmt="%{r}${date}"
+        fmt="%{r}${percent} ${date}"
 
         printf "%s\n" "$fmt"
     done
