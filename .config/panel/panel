@@ -124,6 +124,6 @@ function panel_bar {
     done
 }
 
-panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -f "Droid Sans-10" -f "FontAwesome-10" &
+panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -f "Droid Sans-10" -f "FontAwesome-12" &
 
 wait
