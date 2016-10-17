@@ -121,13 +121,6 @@ function connman_networkstatus () {
     done
 }
 
-function bspc_desktops () {
-    while read line; do
-        result="$result%{A:bspc desktop -f $line:} $line %{A}|"
-    done <<< "$(bspc query --desktops)"
-    echo $result
-}
-
 ################
 # Pipe to fifo #
 ################
@@ -157,7 +150,54 @@ function panel_bar {
                 connection="${line#?}"
                 ;;
             W*)
-                desktops=`bspc_desktops`
+                desktops="%{U$COLOR_FOREGROUND}"
+                reset_colors="%{-u}%{B-}%{F-}"
+                IFS=':'
+                set -- ${line#?}
+                while [ $# -gt 0 ]; do
+                    item=$1
+                    name=${item#?}
+                    case $item in
+                        M*)
+                            # active monitor
+                            ;;
+                        m*)
+                            # inactive monitor
+                            ;;
+                        O*)
+                            # focused occupied desktop
+                            colors="%{F$COLOR_FOCUSED_OCCUPIED_FG}%{B$COLOR_FOCUSED_OCCUPIED_BG}%{+u}"
+                            desktops="$desktops$colors $name ${reset_colors}|"
+                            ;;
+                        F*)
+                            # focused free desktop
+                            colors="%{F$COLOR_FOCUSED_FREE_FG}%{B$COLOR_FOCUSED_FREE_BG}%{+u}"
+                            desktops="$desktops$colors $name ${reset_colors}|"
+                            ;;
+                        U*)
+                            # focused urgent desktop
+                            colors="%{F$COLOR_FOCUSED_URGENT_FG}%{B$COLOR_FOCUSED_URGENT_BG}%{+u}"
+                            desktops="$desktops$colors $name ${reset_colors}|"
+                            ;;
+                        o*)
+                            # occupied desktop
+                            colors="%{F$COLOR_OCCUPIED_FG}%{B$COLOR_OCCUPIED_BG}"
+                            desktops="$desktops$colors $name ${reset_colors}|"
+                            ;;
+                        f*)
+                            # free desktop
+                            ;;
+                        u*)
+                            # urgent desktop
+                            colors="%{F$COLOR_URGENT_FG}%{B$COLOR_URGENT_BG}"
+                            desktops="$desktops$colors $name ${reset_colors}|"
+                            ;;
+                        L*)
+                            # layout of the focused desktop
+                            ;;
+                    esac
+                    shift
+                done
                 ;;
         esac
 
