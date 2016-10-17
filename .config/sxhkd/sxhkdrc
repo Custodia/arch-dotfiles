@@ -145,7 +145,11 @@ ctrl + alt + t
 
 # Program launcher
 super + space
-	dmenu_run
+	rofi -show run
+
+# Window switcher
+super + v
+	rofi -show window
 
 # make sxhkd reload its configuration files:
 super + Escape
