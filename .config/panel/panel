@@ -59,6 +59,33 @@ function clock {
     done
 }
 
+function alsa_master_volume {
+    while true; do
+        left_volume=`amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq | sed -n '1p'`
+        right_volume=`amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq | sed -n '2p'`
+        sound_on=`amixer get Master | sed -n 's/^.*\[\([off]\+\).*$/\1/p' | uniq`
+
+        if [ $sound_on == "off" ]; then
+            icon="\uf026\uf00d"
+        elif [ $left_volume -gt "60" ] || [ $right_volume -gt "60" ]; then
+            icon="\uf028"
+        elif [ $left_volume -gt "30" ] || [ $right_volume -gt "30" ]; then
+            icon="\uf027"
+        elif [ $left_volume -gt "0" ] || [ $right_volume -gt "0" ]; then
+            icon="\uf026"
+        else
+            icon="\uf026\uf00d"
+        fi
+
+        if [ "$right_volume" ]; then
+            right_volume="/$right_volume%"
+        fi
+
+        echo -e "A$left_volume%$right_volume $icon"
+        sleep 1
+    done
+}
+
 BAT="/sys/class/power_supply/BAT1"
 
 function battery {
@@ -127,6 +154,7 @@ function connman_networkstatus () {
 
 clock > "$PANEL_FIFO" &
 bspc subscribe > "$PANEL_FIFO" &
+alsa_master_volume > "$PANEL_FIFO" &
 
 if [[ $(hostname) == 'serendipity' ]]; then
     battery > "$PANEL_FIFO" &
@@ -142,6 +170,9 @@ function panel_bar {
         case $line in
             S*)
                 date="${line#?}"
+                ;;
+            A*)
+                volume="${line#?}"
                 ;;
             B*)
                 percent="${line#?}"
@@ -201,7 +232,7 @@ function panel_bar {
                 ;;
         esac
 
-        fmt="$desktops%{r}${connection}  ${percent}  ${date}"
+        fmt="$desktops%{r}${volume}  ${connection}  ${percent}  ${date}"
 
         printf "%s\n" "$fmt"
     done
