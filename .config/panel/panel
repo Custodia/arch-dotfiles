@@ -121,12 +121,19 @@ function connman_networkstatus () {
     done
 }
 
+function bspc_desktops () {
+    while read line; do
+        result="$result%{A:bspc desktop -f $line:} $line %{A}|"
+    done <<< "$(bspc query --desktops)"
+    echo $result
+}
+
 ################
 # Pipe to fifo #
 ################
 
 clock > "$PANEL_FIFO" &
-bspc control --subscribe > "$PANEL_FIFO" &
+bspc subscribe > "$PANEL_FIFO" &
 
 if [[ $(hostname) == 'serendipity' ]]; then
     battery > "$PANEL_FIFO" &
@@ -149,14 +156,17 @@ function panel_bar {
             C*)
                 connection="${line#?}"
                 ;;
+            W*)
+                desktops=`bspc_desktops`
+                ;;
         esac
 
-        fmt="%{r}${connection}  ${percent}  ${date}"
+        fmt="$desktops%{r}${connection}  ${percent}  ${date}"
 
         printf "%s\n" "$fmt"
     done
 }
 
-panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -f "Droid Sans-10" -f "FontAwesome-12" &
+panel_bar | lemonbar -g x$PANEL_HEIGHT -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" -f "Droid Sans-10" -f "FontAwesome-12" | sh &
 
 wait
