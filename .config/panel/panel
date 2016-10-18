@@ -148,6 +148,16 @@ function connman_networkstatus () {
     done
 }
 
+max_brightness=`cat /sys/class/backlight/intel_backlight/max_brightness`
+
+function brightness () {
+    while true; do
+        cur_brightness=`cat /sys/class/backlight/intel_backlight/brightness`
+        echo -e "b$((100*$cur_brightness/$max_brightness))% \uf185"
+        sleep 1
+    done
+}
+
 ################
 # Pipe to fifo #
 ################
@@ -158,6 +168,7 @@ alsa_master_volume > "$PANEL_FIFO" &
 
 if [[ $(hostname) == 'serendipity' ]]; then
     battery > "$PANEL_FIFO" &
+    brightness > "$PANEL_FIFO" &
     connman_networkstatus > "$PANEL_FIFO" &
 fi
 
@@ -176,6 +187,9 @@ function panel_bar {
                 ;;
             B*)
                 percent="${line#?}"
+                ;;
+            b*)
+                brightness="${line#?}"
                 ;;
             C*)
                 connection="${line#?}"
@@ -232,7 +246,7 @@ function panel_bar {
                 ;;
         esac
 
-        fmt="$desktops%{r}${volume}  ${connection}  ${percent}  ${date}"
+        fmt="$desktops%{r}${volume}  ${connection}  ${brightness}  ${percent}  ${date}"
 
         printf "%s\n" "$fmt"
     done
