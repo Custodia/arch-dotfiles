@@ -32,6 +32,14 @@ COLOR_TITLE_BG='#FF34322E'
 COLOR_STATUS_FG='#FFA3A6AB'
 COLOR_STATUS_BG='#FF34322E'
 
+BRIGHTNESS_COLOR='#FFFF9D00'
+
+BATTERY_FULL_COLOR='#FF00FF0C'
+BATTERY_LOW_COLOR='#FFFFCC00'
+BATTERY_EMPTY_COLOR='#FFFF002A'
+
+NETWORK_COLOR='#FF00BFFF'
+
 ##########################
 # Preparations for panel #
 ##########################
@@ -95,7 +103,7 @@ function battery {
         AC_ONLINE=`cat /sys/class/power_supply/AC/online`
 
         if [ $STATUS == "Charging" ]; then
-            STATUS="\uf0e7 "
+            STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
         elif [ $AC_ONLINE == "1" ]; then
             STATUS="\uf1e6 "
         else
@@ -103,18 +111,18 @@ function battery {
         fi
 
         if [ $CAPACITY -gt "90" ]; then
-            CAPACITY="\uf240"
+            CAPACITY="%{F$BATTERY_FULL_COLOR}\uf240"
         elif [ $CAPACITY -gt "75" ]; then
-            CAPACITY="\uf241"
+            CAPACITY="%{F$BATTERY_FULL_COLOR}\uf241"
         elif [ $CAPACITY -gt "50" ]; then
-            CAPACITY="\uf242"
+            CAPACITY="%{F$BATTERY_LOW_COLOR}\uf242"
         elif [ $CAPACITY -gt "25" ]; then
-            CAPACITY="\uf243"
+            CAPACITY="%{F$BATTERY_LOW_COLOR}\uf243"
         else
-            CAPACITY="\uf244"
+            CAPACITY="%{F$BATTERY_EMPTY_COLOR}\uf244"
         fi
 
-        echo -e "B$STATUS$CAPACITY"
+        echo -e "B$STATUS$CAPACITY%{F-}"
         sleep 1
     done
 }
@@ -189,10 +197,10 @@ function panel_bar {
                 percent="${line#?}"
                 ;;
             b*)
-                brightness="${line#?}"
+                brightness="%{F$BRIGHTNESS_COLOR}${line#?}%{F-}"
                 ;;
             C*)
-                connection="${line#?}"
+                connection="%{F$NETWORK_COLOR}${line#?}%{F-}"
                 ;;
             W*)
                 desktops="%{U$COLOR_FOREGROUND}"
@@ -246,7 +254,7 @@ function panel_bar {
                 ;;
         esac
 
-        fmt="$desktops%{r}${volume}  ${connection}  ${brightness}  ${percent}  ${date}"
+        fmt="$desktops%{r}${connection}  ${volume}  ${brightness}  ${percent}  ${date}"
 
         printf "%s\n" "$fmt"
     done
