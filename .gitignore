@@ -6,3 +6,8 @@
 !.atom/keymap.cson
 !.atom/snippets.cson
 !.atom/styles.less
+
+### mpd is symlinked ###
+# Ignore everything else except conf
+.config/mpd/
+!.config/mpd/mpd.conf
