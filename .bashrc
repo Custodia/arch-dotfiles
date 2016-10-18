@@ -6,6 +6,7 @@
 [[ $- != *i* ]] && return
 
 export PATH=$PATH:/home/jani/.config/panel
+export PATH=$PATH:/home/jani/bin
 
 alias ls='ls --color=auto'
 

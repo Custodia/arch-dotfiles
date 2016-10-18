@@ -133,7 +133,17 @@ super + alt + shift + {h,j,k,l}
 super + button{1-3}
 	bspc pointer -g {move,resize_side,resize_corner}
 
+#
+# Function keys
+#
+XF86AudioRaiseVolume
+	amixer set Master 5%+
 
+XF86AudioLowerVolume
+	amixer set Master 5%-
+
+XF86AudioMute
+	toggle_alsa_mute
 
 #
 # wm independent hotkeys

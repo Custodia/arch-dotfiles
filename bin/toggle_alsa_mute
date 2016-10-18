@@ -1,0 +1,9 @@
+#! /bin/sh
+
+sound_on=`amixer get Master | sed -n 's/^.*\[\([on]\+\).*$/\1/p' | uniq`
+
+if [ $sound_on == "on" ]; then
+   amixer sset Master mute
+else
+   amixer sset Master unmute
+fi
