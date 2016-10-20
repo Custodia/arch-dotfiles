@@ -185,6 +185,8 @@ fi
 #################
 
 function panel_bar {
+    num_mon=$(bspc query -M | wc -l)
+    wm_info_array=("" "" "")
     while read line < $PANEL_FIFO; do
         case $line in
             S*)
@@ -203,7 +205,8 @@ function panel_bar {
                 connection="%{F$NETWORK_COLOR}${line#?}%{F-}"
                 ;;
             W*)
-                desktops="%{U$COLOR_FOREGROUND}"
+                cur_mon=-1
+                monitor_info=""
                 reset_colors="%{-u}%{B-}%{F-}"
                 IFS=':'
                 set -- ${line#?}
@@ -213,29 +216,33 @@ function panel_bar {
                     case $item in
                         M*)
                             # active monitor
+                            cur_mon=$((cur_mon + 1))
+                            monitor_info=""
                             ;;
                         m*)
                             # inactive monitor
+                            cur_mon=$((cur_mon + 1))
+                            monitor_info=""
                             ;;
                         O*)
                             # focused occupied desktop
                             colors="%{F$COLOR_FOCUSED_OCCUPIED_FG}%{B$COLOR_FOCUSED_OCCUPIED_BG}%{+u}"
-                            desktops="$desktops$colors $name ${reset_colors}|"
+                            monitor_info="$monitor_info$colors $name $reset_colors|"
                             ;;
                         F*)
                             # focused free desktop
                             colors="%{F$COLOR_FOCUSED_FREE_FG}%{B$COLOR_FOCUSED_FREE_BG}%{+u}"
-                            desktops="$desktops$colors $name ${reset_colors}|"
+                            monitor_info="$monitor_info$colors $name $reset_colors|"
                             ;;
                         U*)
                             # focused urgent desktop
                             colors="%{F$COLOR_FOCUSED_URGENT_FG}%{B$COLOR_FOCUSED_URGENT_BG}%{+u}"
-                            desktops="$desktops$colors $name ${reset_colors}|"
+                            monitor_info="$monitor_info$colors $name $reset_colors|"
                             ;;
                         o*)
                             # occupied desktop
                             colors="%{F$COLOR_OCCUPIED_FG}%{B$COLOR_OCCUPIED_BG}"
-                            desktops="$desktops$colors $name ${reset_colors}|"
+                            monitor_info="$monitor_info$colors $name $reset_colors|"
                             ;;
                         f*)
                             # free desktop
@@ -243,20 +250,30 @@ function panel_bar {
                         u*)
                             # urgent desktop
                             colors="%{F$COLOR_URGENT_FG}%{B$COLOR_URGENT_BG}"
-                            desktops="$desktops$colors $name ${reset_colors}|"
+                            monitor_info="$monitor_info$colors $name $reset_colors|"
                             ;;
                         L*)
                             # layout of the focused desktop
                             ;;
                     esac
                     shift
+                    wm_info_array[cur_mon]="$monitor_info"
                 done
                 ;;
         esac
 
-        fmt="$desktops%{r}${connection}  ${volume}  ${brightness}  ${percent}  ${date}"
+        result=""
+        right_side="%{r}$connection  $volume  $brightness  $percent  $date"
 
-        printf "%s\n" "$fmt"
+        if [[ $(hostname) == 'destiny' ]]; then
+            result="$result%{S0}%{l}${wm_info_array[1]}$right_side"
+            result="$result%{S1}%{l}${wm_info_array[0]}$right_side"
+            result="$result%{S2}%{l}${wm_info_array[2]}$right_side"
+        else
+            result="${wm_info_array[0]}$right_side"
+        fi
+
+        printf "%s\n" "$result"
     done
 }
 
