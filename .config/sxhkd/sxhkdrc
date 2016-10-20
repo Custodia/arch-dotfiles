@@ -145,6 +145,12 @@ XF86AudioLowerVolume
 XF86AudioMute
 	toggle_alsa_mute
 
+XF86MonBrightnessUp
+  xbacklight -inc 10
+
+XF86MonBrightnessDown
+  xbacklight -dec 10
+
 #
 # wm independent hotkeys
 #
