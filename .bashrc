@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+setxkbmap -layout us -variant altgr-intl -option nodeadkeys
+
 export PATH=$PATH:/home/jani/.config/panel
 export PATH=$PATH:/home/jani/bin
 
