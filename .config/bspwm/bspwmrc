@@ -14,8 +14,7 @@ if [[ $(hostname) == 'destiny' ]]; then
     bspc monitor DFP9 -d VII VIII IX
     bspc monitor DFP13 -d X
 
-    bspc monitor DFP14 -s DFP9
-    bspc monitor DFP9 -s DFP13
+    bspc monitor DFP1 -s DFP14
 else
     bspc monitor -d I II III IV V VI VII VIII IX X
 fi
