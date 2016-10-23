@@ -151,6 +151,31 @@ function brightness () {
     echo -e "b$((100*$cur_brightness/$max_brightness))% \uf185"
 }
 
+function mpd_status () {
+    current_song="$(mpc current 2>&1)"
+    if [[ $current_song == *"mpd error: Connection refused"* ]]; then
+        echo "Mmpd not connected."
+        return 0
+    fi
+
+    if [[ $current_song ]]; then
+        song_num=`mpc status | grep -o -P '#\d+\/\d+'`
+        #playing=`mpc status | grep -o -P '\[(playing|paused)\]' | grep -o -P '\w+'`
+        #repeat=`mpc status | grep -o -P 'repeat: (on|off)' | grep -o -P '\b(on|off)\b'`
+        #random=`mpc status | grep -o -P 'random: (on|off)' | grep -o -P '\b(on|off)\b'`
+        #single=`mpc status | grep -o -P 'single: (on|off)' | grep -o -P '\b(on|off)\b'`
+        #consume=`mpc status | grep -o -P 'consume: (on|off)' | grep -o -P '\b(on|off)\b'`
+        echo "M$song_num  $current_song"
+    else
+        current_song=`mpc playlist | head -n 1`
+        if ! [[ $current_song ]]; then
+            echo "M"
+            return 0
+        fi
+        echo "M$current_song"
+    fi
+}
+
 ################
 # Pipe to fifo #
 ################
@@ -163,6 +188,7 @@ function loop () {
     while true; do
         clock > "$PANEL_FIFO" &
         alsa_master_volume > "$PANEL_FIFO" &
+        mpd_status > "$PANEL_FIFO" &
 
         if [[ $(hostname) == 'serendipity' ]]; then
             battery > "$PANEL_FIFO" &
@@ -198,6 +224,9 @@ function panel_bar {
                 ;;
             C*)
                 connection="%{F$NETWORK_COLOR}${line#?}%{F-}"
+                ;;
+            M*)
+                music_info="${line#?}"
                 ;;
             W*)
                 cur_mon=-1
@@ -261,11 +290,11 @@ function panel_bar {
         right_side="%{r}$connection  $volume  $brightness  $percent  $date"
 
         if [[ $(hostname) == 'destiny' ]]; then
-            result="$result%{S0}%{l}${wm_info_array[1]}$right_side"
-            result="$result%{S1}%{l}${wm_info_array[0]}$right_side"
-            result="$result%{S2}%{l}${wm_info_array[2]}$right_side"
+            result="$result%{S0}%{l}${wm_info_array[1]}%{c}$music_info$right_side"
+            result="$result%{S1}%{l}${wm_info_array[0]}%{c}$music_info$right_side"
+            result="$result%{S2}%{l}${wm_info_array[2]}%{c}$music_info$right_side"
         else
-            result="${wm_info_array[0]}$right_side"
+            result="${wm_info_array[0]}%{c}$music_info$right_side"
         fi
 
         printf "%s\n" "$result"
