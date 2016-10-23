@@ -61,124 +61,119 @@ bspc config top_padding $PANEL_HEIGHT
 ####################
 
 function clock {
-    while true; do
-        TZ=Europe/Helsinki date +"S%d/%m %H:%M"
-        sleep 1
-    done
+    TZ=Europe/Helsinki date +"S%d/%m %H:%M"
 }
 
 function alsa_master_volume {
-    while true; do
-        left_volume=`amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq | sed -n '1p'`
-        right_volume=`amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq | sed -n '2p'`
-        sound_on=`amixer get Master | sed -n 's/^.*\[\([off]\+\).*$/\1/p' | uniq`
+    left_volume=`amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq | sed -n '1p'`
+    right_volume=`amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq | sed -n '2p'`
+    sound_on=`amixer get Master | sed -n 's/^.*\[\([off]\+\).*$/\1/p' | uniq`
 
-        if [ $sound_on == "off" ]; then
-            icon="\uf026\uf00d"
-        elif [ $left_volume -gt "60" ] || [ $right_volume -gt "60" ]; then
-            icon="\uf028"
-        elif [ $left_volume -gt "30" ] || [ $right_volume -gt "30" ]; then
-            icon="\uf027"
-        elif [ $left_volume -gt "0" ] || [ $right_volume -gt "0" ]; then
-            icon="\uf026"
-        else
-            icon="\uf026\uf00d"
-        fi
+    if [ $sound_on == "off" ]; then
+        icon="\uf026\uf00d"
+    elif [ $left_volume -gt "60" ] || [ $right_volume -gt "60" ]; then
+        icon="\uf028"
+    elif [ $left_volume -gt "30" ] || [ $right_volume -gt "30" ]; then
+        icon="\uf027"
+    elif [ $left_volume -gt "0" ] || [ $right_volume -gt "0" ]; then
+        icon="\uf026"
+    else
+        icon="\uf026\uf00d"
+    fi
 
-        if [ "$right_volume" ]; then
-            right_volume="/$right_volume%"
-        fi
+    if [ "$right_volume" ]; then
+        right_volume="/$right_volume%"
+    fi
 
-        echo -e "A$left_volume%$right_volume $icon"
-        sleep 1
-    done
+    echo -e "A$left_volume%$right_volume $icon"
 }
 
 BAT="/sys/class/power_supply/BAT1"
 
 function battery {
-    while true; do
-        STATUS=`cat $BAT/status`
-        CAPACITY=`cat $BAT/capacity`
-        AC_ONLINE=`cat /sys/class/power_supply/AC/online`
+    STATUS=`cat $BAT/status`
+    CAPACITY=`cat $BAT/capacity`
+    AC_ONLINE=`cat /sys/class/power_supply/AC/online`
 
-        if [ $STATUS == "Charging" ]; then
-            STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
-        elif [ $AC_ONLINE == "1" ]; then
-            STATUS="\uf1e6 "
-        else
-            STATUS=""
-        fi
+    if [ $STATUS == "Charging" ]; then
+        STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
+    elif [ $AC_ONLINE == "1" ]; then
+        STATUS="\uf1e6 "
+    else
+        STATUS=""
+    fi
 
-        if [ $CAPACITY -gt "90" ]; then
-            CAPACITY="%{F$BATTERY_FULL_COLOR}\uf240"
-        elif [ $CAPACITY -gt "75" ]; then
-            CAPACITY="%{F$BATTERY_FULL_COLOR}\uf241"
-        elif [ $CAPACITY -gt "50" ]; then
-            CAPACITY="%{F$BATTERY_LOW_COLOR}\uf242"
-        elif [ $CAPACITY -gt "25" ]; then
-            CAPACITY="%{F$BATTERY_LOW_COLOR}\uf243"
-        else
-            CAPACITY="%{F$BATTERY_EMPTY_COLOR}\uf244"
-        fi
+    if [ $CAPACITY -gt "90" ]; then
+        CAPACITY="%{F$BATTERY_FULL_COLOR}\uf240"
+    elif [ $CAPACITY -gt "75" ]; then
+        CAPACITY="%{F$BATTERY_FULL_COLOR}\uf241"
+    elif [ $CAPACITY -gt "50" ]; then
+        CAPACITY="%{F$BATTERY_LOW_COLOR}\uf242"
+    elif [ $CAPACITY -gt "25" ]; then
+        CAPACITY="%{F$BATTERY_LOW_COLOR}\uf243"
+    else
+        CAPACITY="%{F$BATTERY_EMPTY_COLOR}\uf244"
+    fi
 
-        echo -e "B$STATUS$CAPACITY%{F-}"
-        sleep 1
-    done
+    echo -e "B$STATUS$CAPACITY%{F-}"
 }
 
 function connman_networkstatus () {
-    while true; do
-        ethernet=`connmanctl technologies | grep -A 5 technology/ethernet | grep Connected | awk '{print $3}'`
-        wifi=`connmanctl technologies | grep -A 5 technology/wifi | grep Connected | awk '{print $3}'`
-        bluetooth=`connmanctl technologies | grep -A 5 technology/bluetooth | grep Connected | awk '{print $3}'`
+    ethernet=`connmanctl technologies | grep -A 5 technology/ethernet | grep Connected | awk '{print $3}'`
+    wifi=`connmanctl technologies | grep -A 5 technology/wifi | grep Connected | awk '{print $3}'`
+    bluetooth=`connmanctl technologies | grep -A 5 technology/bluetooth | grep Connected | awk '{print $3}'`
 
-        if [ $ethernet == "True" ]; then
-            ethernet="\uf26b"
-        else
-            ethernet=""
-        fi
+    if [ $ethernet == "True" ]; then
+        ethernet="\uf26b"
+    else
+        ethernet=""
+    fi
 
-        if [ $wifi == "True" ]; then
-            wifi="\uf1eb"
-        else
-            wifi=""
-        fi
+    if [ $wifi == "True" ]; then
+        wifi="\uf1eb"
+    else
+        wifi=""
+    fi
 
-        if [ $bluetooth == "True" ]; then
-            bluetooth="\uf293"
-        else
-            bluetooth=""
-        fi
+    if [ $bluetooth == "True" ]; then
+        bluetooth="\uf293"
+    else
+        bluetooth=""
+    fi
 
-        echo -e "C$ethernet$wifi$bluetooth"
-        sleep 1
-    done
+    echo -e "C$ethernet$wifi$bluetooth"
 }
 
 max_brightness=`cat /sys/class/backlight/intel_backlight/max_brightness`
 
 function brightness () {
-    while true; do
-        cur_brightness=`cat /sys/class/backlight/intel_backlight/brightness`
-        echo -e "b$((100*$cur_brightness/$max_brightness))% \uf185"
-        sleep 1
-    done
+    cur_brightness=`cat /sys/class/backlight/intel_backlight/brightness`
+    echo -e "b$((100*$cur_brightness/$max_brightness))% \uf185"
 }
 
 ################
 # Pipe to fifo #
 ################
 
-clock > "$PANEL_FIFO" &
+# Event subscriptions
 bspc subscribe > "$PANEL_FIFO" &
-alsa_master_volume > "$PANEL_FIFO" &
 
-if [[ $(hostname) == 'serendipity' ]]; then
-    battery > "$PANEL_FIFO" &
-    brightness > "$PANEL_FIFO" &
-    connman_networkstatus > "$PANEL_FIFO" &
-fi
+# Fetch every second
+function loop () {
+    while true; do
+        clock > "$PANEL_FIFO" &
+        alsa_master_volume > "$PANEL_FIFO" &
+
+        if [[ $(hostname) == 'serendipity' ]]; then
+            battery > "$PANEL_FIFO" &
+            brightness > "$PANEL_FIFO" &
+            connman_networkstatus > "$PANEL_FIFO" &
+        fi
+        sleep 1
+    done
+}
+
+loop &
 
 #################
 # Lemonbar pipe #
