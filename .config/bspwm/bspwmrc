@@ -7,6 +7,7 @@ bspc config split_ratio         0.52
 bspc config borderless_monocle  true
 bspc config gapless_monocle     true
 bspc config focus_by_distance   true
+bspc config click_to_focus      true
 
 if [[ $(hostname) == 'destiny' ]]; then
     bspc monitor DFP1 -d I II III
