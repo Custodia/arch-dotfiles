@@ -49,3 +49,5 @@ if [ $hostname != destiny ]; then
         fusermount -u ~/media
     }
 fi
+
+source ~/.worksecrets
