@@ -188,7 +188,7 @@ function loop () {
     while true; do
         clock > "$PANEL_FIFO" &
         alsa_master_volume > "$PANEL_FIFO" &
-        mpd_status > "$PANEL_FIFO" &
+        #mpd_status > "$PANEL_FIFO" &
 
         if [[ $(hostname) == 'serendipity' ]]; then
             battery > "$PANEL_FIFO" &
