@@ -29,6 +29,8 @@ super + g
 ## set the window state
 #super + {t,shift + t,s,f}
 #	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + t
+	bspc node -t tiled
 
 # Locked means no close, otherwise no clue
 # set the node flags
