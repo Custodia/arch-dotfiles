@@ -1,4 +1,8 @@
 syntax on
+
+set nocompatible
+set backspace=2
+
 autocmd Filetype gitcommit set textwidth=72
 
 set number
