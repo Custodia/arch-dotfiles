@@ -43,10 +43,10 @@ URxvt.keysym.Control-t: perl:tabbedex:new_tab
 URxvt.keysym.Control-Right: perl:tabbedex:next_tab
 URxvt.keysym.Control-Left: perl:tabbedex:prev_tab
 
-urxvt*font: xft:xos4 Terminus:regular:pixelsize=12:antialias=true:autohint=true
-urxvt*boldFont: xft:xos4 Terminus:regular:pixelsize=12:antialias=true:autohint=true
-urxvt*italicFont: xft:xos4 Terminus:regular:pixelsize=12:antialias=true:autohint=true
-urxvt*bolditalicFont: xft:xos4 Terminus:regular:pixelsize=12:antialias=true:autohint=true
+urxvt*font: xft:xos4 Terminus:regular:pixelsize=13:antialias=true:autohint=true
+urxvt*boldFont: xft:xos4 Terminus:regular:pixelsize=13:antialias=true:autohint=true
+urxvt*italicFont: xft:xos4 Terminus:regular:pixelsize=13:antialias=true:autohint=true
+urxvt*bolditalicFont: xft:xos4 Terminus:regular:pixelsize=13:antialias=true:autohint=true
 
 ! Stolen, not sure of all of this
 urxvt*cursorUnderline: 1
