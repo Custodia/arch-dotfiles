@@ -1,6 +1,6 @@
 #! /bin/sh
 
-bspc config border_width        2
+bspc config border_width        4
 bspc config window_gap         12
 
 bspc config active_border_color  '#0C1115'
