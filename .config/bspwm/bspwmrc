@@ -26,4 +26,5 @@ fi
 
 bspc rule -a Emacs state=tiled
 
+feh --bg-fill --randomize ~/Wallpaper/ &
 panel &
