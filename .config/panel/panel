@@ -94,30 +94,18 @@ BAT1="/sys/class/power_supply/BAT1"
 function battery {
     STATUS0=`cat $BAT0/status`
     CAPACITY0=`cat $BAT0/capacity`
-    STATUS=`cat $BAT1/status`
-    CAPACITY=`cat $BAT1/capacity`
+    STATUS1=`cat $BAT1/status`
+    CAPACITY1=`cat $BAT1/capacity`
     AC_ONLINE=`cat /sys/class/power_supply/AC/online`
 
-    if [ $STATUS == "Charging" ]; then
+    if [ $STATUS1 == "Charging" ]; then
         STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
-    elif [ $STATUS1 == "Charging" ]; then
+    elif [ $STATUS0 == "Charging" ]; then
         STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
     elif [ $AC_ONLINE == "1" ]; then
         STATUS="\uf1e6 "
     else
         STATUS=""
-    fi
-
-    if [ $CAPACITY -gt "90" ]; then
-        CAPACITY="%{F$BATTERY_FULL_COLOR}\uf240"
-    elif [ $CAPACITY -gt "75" ]; then
-        CAPACITY="%{F$BATTERY_FULL_COLOR}\uf241"
-    elif [ $CAPACITY -gt "50" ]; then
-        CAPACITY="%{F$BATTERY_LOW_COLOR}\uf242"
-    elif [ $CAPACITY -gt "25" ]; then
-        CAPACITY="%{F$BATTERY_LOW_COLOR}\uf243"
-    else
-        CAPACITY="%{F$BATTERY_EMPTY_COLOR}\uf244"
     fi
 
     if [ $CAPACITY0 -gt "90" ]; then
@@ -132,7 +120,19 @@ function battery {
         CAPACITY0="%{F$BATTERY_EMPTY_COLOR}\uf244"
     fi
 
-    echo -e "B$STATUS$CAPACITY0 $CAPACITY%{F-}"
+    if [ $CAPACITY1 -gt "90" ]; then
+        CAPACITY1="%{F$BATTERY_FULL_COLOR}\uf240"
+    elif [ $CAPACITY1 -gt "75" ]; then
+        CAPACITY1="%{F$BATTERY_FULL_COLOR}\uf241"
+    elif [ $CAPACITY1 -gt "50" ]; then
+        CAPACITY1="%{F$BATTERY_LOW_COLOR}\uf242"
+    elif [ $CAPACITY1 -gt "25" ]; then
+        CAPACITY1="%{F$BATTERY_LOW_COLOR}\uf243"
+    else
+        CAPACITY1="%{F$BATTERY_EMPTY_COLOR}\uf244"
+    fi
+
+    echo -e "B$STATUS$CAPACITY0 $CAPACITY1%{F-}"
 }
 
 function connman_networkstatus () {
