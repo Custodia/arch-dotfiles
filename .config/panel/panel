@@ -88,14 +88,19 @@ function alsa_master_volume {
     echo -e "A$left_volume%$right_volume $icon"
 }
 
-BAT="/sys/class/power_supply/BAT1"
+BAT0="/sys/class/power_supply/BAT0"
+BAT1="/sys/class/power_supply/BAT1"
 
 function battery {
-    STATUS=`cat $BAT/status`
-    CAPACITY=`cat $BAT/capacity`
+    STATUS0=`cat $BAT0/status`
+    CAPACITY0=`cat $BAT0/capacity`
+    STATUS=`cat $BAT1/status`
+    CAPACITY=`cat $BAT1/capacity`
     AC_ONLINE=`cat /sys/class/power_supply/AC/online`
 
     if [ $STATUS == "Charging" ]; then
+        STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
+    elif [ $STATUS1 == "Charging" ]; then
         STATUS="%{F$BATTERY_LOW_COLOR}\uf0e7 "
     elif [ $AC_ONLINE == "1" ]; then
         STATUS="\uf1e6 "
@@ -115,7 +120,19 @@ function battery {
         CAPACITY="%{F$BATTERY_EMPTY_COLOR}\uf244"
     fi
 
-    echo -e "B$STATUS$CAPACITY%{F-}"
+    if [ $CAPACITY0 -gt "90" ]; then
+        CAPACITY0="%{F$BATTERY_FULL_COLOR}\uf240"
+    elif [ $CAPACITY0 -gt "75" ]; then
+        CAPACITY0="%{F$BATTERY_FULL_COLOR}\uf241"
+    elif [ $CAPACITY0 -gt "50" ]; then
+        CAPACITY0="%{F$BATTERY_LOW_COLOR}\uf242"
+    elif [ $CAPACITY0 -gt "25" ]; then
+        CAPACITY0="%{F$BATTERY_LOW_COLOR}\uf243"
+    else
+        CAPACITY0="%{F$BATTERY_EMPTY_COLOR}\uf244"
+    fi
+
+    echo -e "B$STATUS$CAPACITY0 $CAPACITY%{F-}"
 }
 
 function connman_networkstatus () {
