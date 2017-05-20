@@ -1,0 +1,9 @@
+#! /bin/sh
+
+# Install programs
+sudo pacman -Syuu git
+
+# Git defaults
+git config --global core.editor "vim"
+git config --global remote.origin.prune true
+git config --global pull.ff only
