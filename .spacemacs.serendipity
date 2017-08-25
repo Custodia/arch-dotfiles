@@ -43,7 +43,8 @@ values."
      nlinum
 
      ivy
-     ;; auto-completion
+     auto-completion
+     ;; syntax-checking
      ;; better-defaults
 
      ;; languages
@@ -58,7 +59,6 @@ values."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -312,7 +312,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (define-key ivy-minibuffer-map (kbd "<escape>") 'minibuffer-keyboard-quit)
   )
 
 (defun dotspacemacs/user-config ()
@@ -322,6 +321,11 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (define-key ivy-minibuffer-map (kbd "<escape>") 'minibuffer-keyboard-quit)
+  (global-company-mode)
+  (yas-global-mode t)
+  (define-key yas-minor-mode-map (kbd "<tab>") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -333,7 +337,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (nlinum-relative nlinum elm-mode f ob-elixir toc-org org-bullets org-plus-contrib flycheck-mix flycheck-credo flycheck alchemist s company dash elixir-mode which-key wgrep use-package smex pcre2el macrostep ivy-hydra hydra help-fns+ helm-make helm helm-core popup flx exec-path-from-shell evil-visualstar evil-escape evil goto-chg undo-tree elisp-slime-nav diminish counsel-projectile projectile pkg-info epl counsel swiper ivy bind-map bind-key auto-compile packed async ace-window avy))))
+    (fuzzy flycheck-pos-tip pos-tip flycheck-elm company-statistics auto-yasnippet yasnippet ac-ispell auto-complete nlinum-relative nlinum elm-mode f ob-elixir toc-org org-bullets org-plus-contrib flycheck-mix flycheck-credo flycheck alchemist s company dash elixir-mode which-key wgrep use-package smex pcre2el macrostep ivy-hydra hydra help-fns+ helm-make helm helm-core popup flx exec-path-from-shell evil-visualstar evil-escape evil goto-chg undo-tree elisp-slime-nav diminish counsel-projectile projectile pkg-info epl counsel swiper ivy bind-map bind-key auto-compile packed async ace-window avy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
