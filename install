@@ -7,3 +7,4 @@ sudo pacman -Syuu git
 git config --global core.editor "vim"
 git config --global remote.origin.prune true
 git config --global pull.ff only
+git config --global rebase.autoSquash true
