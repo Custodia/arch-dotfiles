@@ -9,6 +9,7 @@ setxkbmap -layout us -variant altgr-intl -option nodeadkeys
 
 export PATH=$PATH:/home/jani/.config/panel
 export PATH=$PATH:/home/jani/bin
+export PATH=$PATH:/home/jani/.mix/escripts
 
 alias ls='ls --color=auto'
 
